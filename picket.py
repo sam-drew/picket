@@ -46,10 +46,10 @@ def in_fence(fence, point):
         return(False)
 
 # Class to define a fence.
-class fence:
+class Fence:
     # Points are given as tuples
     points = None
     def __init__(self):
         self.points = []
-    def add_point(point):
+    def add_point(self, point):
         self.points.append(point)
