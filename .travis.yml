@@ -3,4 +3,4 @@ python:
     - "3.5"
     - "3.5-dev"
 script:
-    - pytest
+    - python3 picket.py
