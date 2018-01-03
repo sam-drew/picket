@@ -101,4 +101,4 @@ ENV/
 .mypy_cache/
 
 # other crap
-demo_snippets
+demo*
