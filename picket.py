@@ -5,7 +5,7 @@ def in_fence(fence, point, verbose = False):
     # First, find the horozontal line equation that passes through the point.
     # Using the y = mx + c fomat, express as a tuple of (m, c). As the line will
     # always be horizontal, the equation will give constant output (y = n).
-    point_horizon_eqn = (point[1], 0)
+    point_horizon_eqn = (0, point[1])
 
     # Next, form equations with the list of points given by the Fence object.
     if len(fence.points) < 3:
@@ -23,6 +23,15 @@ def in_fence(fence, point, verbose = False):
         else:
             point2 = fence.points[point_index + 1]
         # Delta y over delta x == gradient.
+        # Check if vertical or horizontal line first.
+        if point1[0] == point2[0]:
+            # Hoizontal
+            c = point1[1]
+            m = 0
+        elif point1[1] == point2[1]:
+            # Vertical; y = mx + c doesn't work.
+            # I've fucked this again. Need to change to Ax + By + C = 0. FFS!
+
         c = ((point2[1] - point1[1]) / (point2[0] - point1[0]))
         # Find m by substitution using point1.
         m = ((point1[1] - c) / point1[0])
