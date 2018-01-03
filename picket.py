@@ -15,18 +15,18 @@ def in_fence(fence, point, verbose = False):
     # Where each element in the line_eqns list is a tuple of (m, c).
     line_eqns = []
     for point_index in range(len(fence.points)):
-        point1 = fence.points(point_index)
+        point1 = fence.points[point_index]
         # If point1 is the last in the list, point2 is the first element of the
         # list.
         if point_index == (len(fence.points) - 1):
             point2 = fence.points[0]
         else:
-            point2 = fence.points(point_index + 1)
+            point2 = fence.points[point_index + 1]
         # Delta y over delta x == gradient.
         c = ((point2[1] - point1[1]) / (point2[0] - point1[0]))
         # Find m by substitution using point1.
         m = ((point1[1] - c) / point1[0])
-        if vebose == True:
+        if verbose == True:
             print("Formed equation y=" + m + "x+" + c, "from point:", point1, "and", point2)
         line_eqns.append((m, c))
 
