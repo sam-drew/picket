@@ -89,7 +89,7 @@ class Fence:
                 b = 1
                 c = point1[1]
                 if debug == True:
-                    print("Formed equation", str(a) + "y+" + str(b) + "x=" + str(c), "from points:", point1, "and", point2)
+                    print("Formed equation", str(a) + "x+" + str(b) + "y=" + str(c), "from points:", point1, "and", point2)
                 line_eqns.append((a, b, c))
             elif point1[0] == point2[0]:
                 # Vertical
@@ -97,15 +97,15 @@ class Fence:
                 b = 0
                 c = point1[0]
                 if debug == True:
-                    print("Formed equation", str(a) + "y+" + str(b) + "x=" + str(c), "from points:", point1, "and", point2)
+                    print("Formed equation", str(a) + "x+" + str(b) + "y=" + str(c), "from points:", point1, "and", point2)
                 line_eqns.append((a, b, c))
             else:
                 # Non vertical or hoizontal line.
-                a = 1
-                b = (-1 * ((point2[1] - point1[1]) / (point2[0] - point1[0])))
-                c = (point1[1] + (b * point1[0]))
+                a = (-1 * ((point2[1] - point1[1]) / (point2[0] - point1[0])))
+                b = 1
+                c = (point1[1] + ((-1 * ((point2[1] - point1[1]) / (point2[0] - point1[0]))) * point1[0]))
                 if debug == True:
-                    print("Formed equation", str(a) + "y+" + str(b) + "x=" + str(c), "from points:", point1, "and", point2)
+                    print("Formed equation", str(a) + "x+" + str(b) + "y=" + str(c), "from points:", point1, "and", point2)
                 line_eqns.append((a, b, c))
         if debug == True:
             print("\n")
@@ -144,6 +144,8 @@ class Fence:
             else:
                 return(False)
 
+        if debug == True:
+            print("\nx bounds are:", str(self.max_x), str(self.min_x), "y bounds:", str(self.max_y), str(self.min_y))
         intersection_points_left = []
         intersection_points_right = []
         for line in line_eqns:
