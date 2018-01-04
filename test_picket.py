@@ -33,3 +33,13 @@ def test_in_fence_easy():
 	my_fence.add_point((1, 3))
 
 	assert picket.in_fence(my_fence, (2, 2))
+
+def test_in_fence_real_latlong_large_scale():
+	my_fence = picket.Fence()
+
+	my_fence.add_point((44.030013, -44.309738))
+	my_fence.add_point((45.032447, 66.784004))
+	my_fence.add_point((-28.837860, 59.928536))
+	my_fence.add_point((-24.759721, -20.930834))
+
+	assert picket.in_fence(my_fence, (0.447227, 24.244944))
