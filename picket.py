@@ -20,16 +20,46 @@ class Fence:
     A Fence object is primarily a way of containing a list of points that form
     a boundary, and providing the ability to add / change points in the fence.
     """
+    
     points = None
+    max_x = None
+    max_y = None
+    min_x = None
+    min_y = None
+
     def __init__(self):
         self.points = []
+
     def add_point(self, point):
         self.points.append(point)
+        # Check if new max / min
+        if self.max_x != None:
+            if point[0] > self.max_x:
+                self.max_x = point[0]
+        else:
+            self.max_x = point[0]
+        if self.max_y != None:
+            if point[1] > self.max_y:
+                self.max_y = point[1]
+        else:
+            self.max_y = point[1]
+        if self.min_x != None:
+            if point[0] < self.min_x:
+                self.min_x = point[0]
+        else:
+            self.min_x = point[0]
+        if self.min_y != None:
+            if point[1] < self.min_y:
+                self.min_y = point[1]
+        else:
+            self.min_y = point[1]
+
     def list_points(self):
         return(self.points)
+
     def check_point(self, point, debug = False):
         """
-        check_point() checks if a given point lies inside a given fence polygon.
+        check_point()  checks if a given point lies inside a given fence polygon.
         Parameters are given as an instance of the fence class and a given point as
         a, tuple of (x, y).
         """
@@ -52,7 +82,6 @@ class Fence:
                 point2 = self.points[0]
             else:
                 point2 = self.points[point_index + 1]
-            # Delta y over delta x == gradient.
             # Check if vertical or horizontal line first.
             if point1[1] == point2[1]:
                 # Hoizontal
