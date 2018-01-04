@@ -32,7 +32,7 @@ def test_in_fence_easy():
 	my_fence.add_point((3, 3))
 	my_fence.add_point((1, 3))
 
-	assert picket.in_fence(my_fence, (2, 2))
+	assert my_fence.check_point((2, 2))
 
 def test_in_fence_real_latlong_large_scale():
 	my_fence = picket.Fence()
@@ -42,4 +42,4 @@ def test_in_fence_real_latlong_large_scale():
 	my_fence.add_point((-28.837860, 59.928536))
 	my_fence.add_point((-24.759721, -20.930834))
 
-	assert picket.in_fence(my_fence, (0.447227, 24.244944))
+	assert my_fence.check_point((0.447227, 24.244944))
