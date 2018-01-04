@@ -1,7 +1,7 @@
 # in_fence checks if a given point lies inside a given fence polygon.
 # Parameters are given as an instance of the fence class and a given point as a
 # tuple of (x, y).
-def in_fence(fence, point, verbose = False):
+def in_fence(fence, point, debug = False):
     # First, find the horozontal line equation that passes through the point.
     # Using the Ax + By = C fomat, express as a tuple of (A, B, C).
     point_horizon_eqn = (0, 1, point[1])
@@ -28,7 +28,7 @@ def in_fence(fence, point, verbose = False):
             a = 0
             b = 1
             c = point1[1]
-            if verbose == True:
+            if debug == True:
                 print("Formed equation", str(a) + "y+" + str(b) + "x=" + str(c), "from points:", point1, "and", point2)
             line_eqns.append((a, b, c))
         elif point1[0] == point2[0]:
@@ -36,7 +36,7 @@ def in_fence(fence, point, verbose = False):
             a = 1
             b = 0
             c = point1[0]
-            if verbose == True:
+            if debug == True:
                 print("Formed equation", str(a) + "y+" + str(b) + "x=" + str(c), "from points:", point1, "and", point2)
             line_eqns.append((a, b, c))
         else:
@@ -44,11 +44,51 @@ def in_fence(fence, point, verbose = False):
             a = 1
             b = (-1 * ((point2[1] - point1[1]) / (point2[0] - point1[0])))
             c = (point1[1] + (b * point1[0]))
-            if verbose == True:
+            if debug == True:
                 print("Formed equation", str(a) + "y+" + str(b) + "x=" + str(c), "from points:", point1, "and", point2)
             line_eqns.append((a, b, c))
-    if verbose == True:
+    if debug == True:
         print("All equations formed (in order):", line_eqns)
+        print("Finding intersections...")
+    # Find numbe of intersections of the fence with the point horizon line on
+    # either side of the point.
+    def find_intersect(line, point_horizon_eqn):
+        D  = line[0] * point_horizon_eqn[1] - line[1] * point_horizon_eqn[0]
+        Dx = line[2] * point_horizon_eqn[1] - line[1] * point_horizon_eqn[2]
+        Dy = line[0] * point_horizon_eqn[2] - line[2] * point_horizon_eqn[0]
+        if D != 0:
+            x = Dx / D
+            y = Dy / D
+            return (x, y)
+        else:
+            return False
+
+    intersection_points_left = []
+    intersection_points_right = []
+    for line in line_eqns:
+        intersection_point = find_intersect(line, point_horizon_eqn)
+        if debug == True:
+            print("Intersection point between lines:", line, "&", point_horizon_eqn, "is:", intersection_point)
+        if intersection_point != False:
+            if intersection_point[0] < point[0]:
+                # Intersection point x value is less than point x value.
+                if intersection_point not in intersection_points_left:
+                    intersection_points_left.append(intersection_point)
+            else:
+                # Intersection point x value is greater than point x value.
+                if intersection_point not in intersection_points_right:
+                    intersection_points_right.append(intersection_point)
+
+    if len(intersection_points_left) > 0 and len(intersection_points_right) > 0:
+        if ((len(intersection_points_left) % 2) == 1) and ((len(intersection_points_right) % 2) == 1):
+            # Both have odd intersection counts, so the point is in the Fence.
+            return(True)
+        else:
+            print(intersection_points_left, intersection_points_right)
+            return(False)
+    else:
+        print(intersection_points_left, intersection_points_right)
+        return(False)
 
 # Class to define a fence.
 class Fence:

@@ -23,3 +23,13 @@ def test_list_points():
 	my_fence.add_point((1, 3))
 
 	assert my_fence.list_points() == [(1, 1), (3, 1), (3, 3), (1, 3)]
+
+def test_in_fence_easy():
+	my_fence = picket.Fence()
+
+	my_fence.add_point((1, 1))
+	my_fence.add_point((3, 1))
+	my_fence.add_point((3, 3))
+	my_fence.add_point((1, 3))
+
+	assert picket.in_fence(my_fence, (2, 2))
