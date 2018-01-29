@@ -1,3 +1,5 @@
 site_name: Picket
 pages:
-    - Home: index.md
+    - Home: home.md
+    - Technical Docs: tech.md
+    - Maths: maths.md
