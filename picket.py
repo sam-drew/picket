@@ -63,6 +63,39 @@ class Fence:
         Parameters are given as an instance of the fence class and a given point as
         a, tuple of (x, y).
         """
+        def check_in_bounds(point):
+            """
+            check_in_bounds() checks if a supplied point is within the upper and
+            lower x & y bounds of the points forming the Fence.
+
+            Returns true if the point is within bound and false if it's outside
+            bounds.
+            """
+
+            if point[0] <= self.max_x and point[0] >= self.min_x and point[1] <= self.max_y and point[1] >= self.min_y:
+                return(True)
+            else:
+                return(False)
+
+        # Find numbe of intersections of the fence with the point horizon line on
+        # either side of the point.
+        def find_intersect(line, point_horizon_eqn):
+            """
+            find_intersect() returns a coordinate if an intersection exists, and
+            False if not.
+
+            Uses Cramers rule to work it out.
+            """
+            D  = line[0] * point_horizon_eqn[1] - line[1] * point_horizon_eqn[0]
+            Dx = line[2] * point_horizon_eqn[1] - line[1] * point_horizon_eqn[2]
+            Dy = line[0] * point_horizon_eqn[2] - line[2] * point_horizon_eqn[0]
+            if D != 0:
+                x = Dx / D
+                y = Dy / D
+                return (x, y)
+            else:
+                return False
+
         # First, find the horozontal line equation that passes through the point.
         # Using the Ax + By = C fomat, express as a tuple of (A, B, C).
         point_horizon_eqn = (0, 1, point[1])
@@ -107,44 +140,11 @@ class Fence:
                 if debug == True:
                     print("Formed equation", str(a) + "x+" + str(b) + "y=" + str(c), "from points:", point1, "and", point2)
                 line_eqns.append((a, b, c))
+
         if debug == True:
             print("\n")
             print("All equations formed (in order):", line_eqns)
             print("Finding intersections...\n")
-        # Find numbe of intersections of the fence with the point horizon line on
-        # either side of the point.
-        def find_intersect(line, point_horizon_eqn):
-            """
-            find_intersect() returns a coordinate if an intersection exists, and
-            False if not.
-
-            Uses Cramers rule to work it out.
-            """
-            D  = line[0] * point_horizon_eqn[1] - line[1] * point_horizon_eqn[0]
-            Dx = line[2] * point_horizon_eqn[1] - line[1] * point_horizon_eqn[2]
-            Dy = line[0] * point_horizon_eqn[2] - line[2] * point_horizon_eqn[0]
-            if D != 0:
-                x = Dx / D
-                y = Dy / D
-                return (x, y)
-            else:
-                return False
-
-        def check_in_bounds(point):
-            """
-            check_in_bounds() checks if a supplied point is within the upper and
-            lower x & y bounds of the points forming the Fence.
-
-            Returns true if the point is within bound and false if it's outside
-            bounds.
-            """
-
-            if point[0] <= self.max_x and point[0] >= self.min_x and point[1] <= self.max_y and point[1] >= self.min_y:
-                return(True)
-            else:
-                return(False)
-
-        if debug == True:
             print("\nx bounds are:", str(self.max_x), str(self.min_x), "y bounds:", str(self.max_y), str(self.min_y))
         intersection_points_left = []
         intersection_points_right = []
@@ -177,3 +177,6 @@ class Fence:
         else:
             print(intersection_points_left, intersection_points_right)
             return(False)
+
+def convertDMSToDD(degrees, minutes, seconds):
+    return(degrees + (minutes / 60) + (seconds / 3600))
