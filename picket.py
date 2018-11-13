@@ -86,6 +86,7 @@ class Fence:
 
             Uses Cramers rule to work it out.
             """
+            # Calculate the determinant.
             D  = line[0] * point_horizon_eqn[1] - line[1] * point_horizon_eqn[0]
             Dx = line[2] * point_horizon_eqn[1] - line[1] * point_horizon_eqn[2]
             Dy = line[0] * point_horizon_eqn[2] - line[2] * point_horizon_eqn[0]
@@ -136,7 +137,8 @@ class Fence:
                 # Non vertical or hoizontal line.
                 a = (-1 * ((point2[1] - point1[1]) / (point2[0] - point1[0])))
                 b = 1
-                c = (point1[1] + ((-1 * ((point2[1] - point1[1]) / (point2[0] - point1[0]))) * point1[0]))
+                # c = y - ax
+                c = (point1[1] + (a * point1[0]))
                 if debug == True:
                     print("Formed equation", str(a) + "x+" + str(b) + "y=" + str(c), "from points:", point1, "and", point2)
                 line_eqns.append((a, b, c))
