@@ -103,3 +103,10 @@ ENV/
 # other crap
 demo*
 *swp
+
+# tex stuff
+/docs/*.aux
+/docs/*.log
+/docs/*.synctex.gz
+/docs/*.x.gnuplot
+/docs/.DS_Store
