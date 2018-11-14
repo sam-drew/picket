@@ -22,37 +22,13 @@ class Fence:
     """
 
     points = None
-    max_x = None
-    max_y = None
-    min_x = None
-    min_y = None
 
     def __init__(self):
         self.points = []
 
     def add_point(self, point):
+        # Add new point to points list.
         self.points.append(point)
-        # Check if new max / min
-        if self.max_x != None:
-            if point[0] > self.max_x:
-                self.max_x = point[0]
-        else:
-            self.max_x = point[0]
-        if self.max_y != None:
-            if point[1] > self.max_y:
-                self.max_y = point[1]
-        else:
-            self.max_y = point[1]
-        if self.min_x != None:
-            if point[0] < self.min_x:
-                self.min_x = point[0]
-        else:
-            self.min_x = point[0]
-        if self.min_y != None:
-            if point[1] < self.min_y:
-                self.min_y = point[1]
-        else:
-            self.min_y = point[1]
 
     def list_points(self):
         return(self.points)
@@ -63,19 +39,62 @@ class Fence:
         Parameters are given as an instance of the fence class and a given point as
         a, tuple of (x, y).
         """
-        def check_in_bounds(point):
+        def check_in_bounds(point, line_eqns_index):
             """
             check_in_bounds() checks if a supplied point is within the upper and
-            lower x & y bounds of the points forming the Fence.
+            lower x & y bounds of the points that form a given line.
+
+            Takes the point to be checked and the index that points to which line
+            is being tested. Knowing the location of the line equation in its list
+            we can find the points that it is formed from.
 
             Returns true if the point is within bound and false if it's outside
             bounds.
             """
+            withinX = False;
+            withinY = False;
 
-            if point[0] <= self.max_x and point[0] >= self.min_x and point[1] <= self.max_y and point[1] >= self.min_y:
-                return(True)
+            pointA = self.points[line_eqns_index]
+            # If the index is pointing to the last member of the list, the line
+            # is made of points that wrap around back to the start of the points
+            # list.
+            if line_eqns_index + 1 == len(self.points):
+                pointB = self.points[0]
             else:
-                return(False)
+                pointB = self.points[line_eqns_index + 1]
+
+            print(point)
+            print(pointA, pointB)
+            # Check if point[x] is within pointA[x] and pointB[x].
+            if (pointA[0] >= pointB[0]):
+                # pointA is more positive than pointB so check if point[x] is
+                # between these.
+                if (point[0] <= pointA[0] and point[0] >= pointB[0]):
+                    withinX = True
+            elif (pointA[0] <= pointB[0]):
+                # pointA is less positive than pointB.
+                if (point[0] >= pointA[0] and point[0] <= pointB[0]):
+                    withinX = True
+
+            # Check if point[y] is within pointA[y] and pointB[y].
+            if (pointA[1] >= pointB[1]):
+                print("pointA[1] >= pointB[1]")
+                # pointA is more positive than pointB so check if point[y] is
+                # between these.
+                if (point[1] <= pointA[1] and point[1] >= pointB[1]):
+                    withinY = True
+            elif (pointA[1] <= pointB[1]):
+                print("pointA[1] <= pointB[1]")
+                # pointA is less positive than pointB.
+                if (point[1] >= pointA[1] and point[1] <= pointB[1]):
+                    withinY = True
+
+            print(withinX, withinY)
+
+            if withinX and withinY:
+                return True
+            else:
+                return False
 
         # Find numbe of intersections of the fence with the point horizon line on
         # either side of the point.
@@ -150,18 +169,18 @@ class Fence:
             print("\nx bounds are:", str(self.max_x), str(self.min_x), "y bounds:", str(self.max_y), str(self.min_y))
         intersection_points_left = []
         intersection_points_right = []
-        for line in line_eqns:
-            intersection_point = find_intersect(line, point_horizon_eqn)
+        for line_index in range(0, len(line_eqns)):
+            intersection_point = find_intersect(line_eqns[line_index], point_horizon_eqn)
             if debug == True:
-                print("Intersection point between lines:", line, "&", point_horizon_eqn, "is:", intersection_point)
+                print("Intersection point between lines:", line_eqns[line_index], "&", point_horizon_eqn, "is:", intersection_point)
             if intersection_point != False:
                 if intersection_point[0] < point[0]:
                     # Intersection point x value is less than point x value.
-                    if (intersection_point not in intersection_points_left) and check_in_bounds(intersection_point) == True:
+                    if (intersection_point not in intersection_points_left) and check_in_bounds(intersection_point, line_index) == True:
                         intersection_points_left.append(intersection_point)
                 else:
                     # Intersection point x value is greater than point x value.
-                    if (intersection_point not in intersection_points_right) and check_in_bounds(intersection_point) == True:
+                    if (intersection_point not in intersection_points_right) and check_in_bounds(intersection_point, line_index) == True:
                         intersection_points_right.append(intersection_point)
 
         # Check if the number of intersections to the left and right are odd.
