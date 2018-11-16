@@ -1,0 +1,29 @@
+\documentclass[preview]{standalone}
+\usepackage{tikz}
+\begin{document}
+% Draw the axes %
+\begin{tikzpicture}[domain=0:2]
+\draw[thick,color=gray,step=1cm,dotted] (6,-6) grid (-6,6);
+\draw[->] (-6.5,0) -- (6.5,0)
+node[right] {$x$};
+\draw[->] (0,-6.5) -- (0,6.5)
+node[left] {$y$};
+% Draw the point to be checked %
+\node [red] at (3,2) {\textbullet};
+\node [above] at (3,2) {P};
+% Draw the points that make up the fence with labels %
+\node [blue] at (-2,3) {\textbullet};
+\node [above left] at (-2,3) {A};
+\node [blue] at (4,4) {\textbullet};
+\node [above right] at (4,4) {B};
+\node [blue] at (3,-2) {\textbullet};
+\node [below right] at (3,-2) {C};
+\node [blue] at (-1,-1) {\textbullet};
+\node [below left] at (-1,-1) {D};
+% Draw the lines that form the fence %
+\draw [blue] (-2,3) -- (4,4);
+\draw [blue] (4,4) -- (3,-2);
+\draw [blue] (3,-2) -- (-1,-1);
+\draw [blue] (-1,-1) -- (-2,3);
+\end{tikzpicture}
+\end{document}
