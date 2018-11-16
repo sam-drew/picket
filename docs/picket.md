@@ -2,7 +2,7 @@
 
 picket is a library that uses coordinate geometry to calculate whether a given point is inside a fence made from several other points. It treats the latitude/longitude system as a coordinate grid to do this, with North & East as positive axes and South & West as negative axes. Points must be provided in decimal lat/long form, but a conversion method is available for values in Degrees, Minutes, and Seconds (DMS).
 
-## How it works.
+## The Maths.
 
 picket uses various pieces of coordinate geometry maths to perform its calculations. This is probably best explained using a worked example.
 
@@ -10,6 +10,7 @@ Point to be checked (P) = `(3, 2)`.
 Points that form the fence (in order) (ABCD) = `[(-2, 3), (4, 4), (3, -2), (-1, -1)]`.
 
 ![Figure 1](fig_1/figure_1.png)
+
 *Figure 1*
 
 As you can see in *Figure 1*, the fence is shown in blue and the point to be checked in shown in red. The point is clearly within the fence, but for a computer it's not quite that easy.  
