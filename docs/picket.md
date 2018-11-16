@@ -9,7 +9,7 @@ picket uses various pieces of coordinate geometry maths to perform its calculati
 Point to be checked (P) = `(3, 2)`.  
 Points that form the fence (in order) (ABCD) = `[(-2, 3), (4, 4), (3, -2), (-1, -1)]`.
 
-![Figure 1](fig_1/figure_1.png)
+![Figure 1](figures/fig_1/figure_1.png)
 
 *Figure 1*
 
@@ -17,7 +17,7 @@ As you can see in *Figure 1*, the fence is shown in blue and the point to be che
 
 It is possible to programatically determine if a point is within a polygon using ray casting. A ray cast in any direction from the point will intersect with the polygon an odd number of times if it is within the polygon, and an even amount of times if it is not. As such, picket first forms a line equation from the point to be checked that will be used as the ray. I've chosen to use a horizontal line, but a line of any gradient will work so long as it passes through the point.
 
-![Figure 2](fig_2/figure_2.png)
+![Figure 2](figures/fig_2/figure_2.png)
 
 *Figure 2*
 
@@ -27,15 +27,15 @@ However, a computer cannot just *see* that the lines intersect, this must be cal
 
 First, the equations of the lines that form the fence are calculated. The polygon is separated into pairs of points: `(A, B), (B, C), (C, D), (D, A)`, each pair forms a line that makes up part of the fence. For each pair of points, the gradient is found. Taking `(A, B)` as an example:
 
-![Figure 3](fig_3/figure_3.png)  
-![Figure 4](fig_4/figure_4.png)
+![Figure 3](figures/fig_3/figure_3.png)  
+![Figure 4](figures/fig_4/figure_4.png)
 
 *Figures 3 & 4*
 
 
 Once the gradient of the line has been calculated, the equation of the line can be found as follows:
 
-![Figure 5](fig_5/figure_5.png)  
+![Figure 5](figures/fig_5/figure_5.png)  
 
 *Figure 5*
 
@@ -45,13 +45,13 @@ Once the line equations of each side of the polygon have been found, we can find
 
 The point at which 2 linear equations (straight lines) intersect can be calculated by solving these equations simultaneously, using Cramer's rule. From Figure 2 we can see that the point horizon line intersects with lines `BC` and `DA`, for this example we will be using line `BC`, follow the above steps to find the equation for it.
 
-![Figure 6](fig_6/figure_6.png)
+![Figure 6](figures/fig_6/figure_6.png)
 
 *Figure 6*
 
 In very simplified terms, Cramer's rule calculates the solutions to a system by finding the determinant of the matrix formed by the x&y coefficients (`D`), the determinant of the matrix formed by the y coefficient and the right-hand-side (`Dx`), and the determinant of the matrix formed by the x coefficient and the right-hand-side (`Dy`). Once these have been found, the solutions x and y can be found by calculated by `Dx/D` and `Dy/D`:
 
-![Figure 7](fig_7/figure_7.png)
+![Figure 7](figures/fig_7/figure_7.png)
 
 *Figure 7*
 
