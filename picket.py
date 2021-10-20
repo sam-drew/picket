@@ -166,7 +166,7 @@ class Fence:
             print("\n")
             print("All equations formed (in order):", line_eqns)
             print("Finding intersections...\n")
-            print("\nx bounds are:", str(self.max_x), str(self.min_x), "y bounds:", str(self.max_y), str(self.min_y))
+#            print("\nx bounds are:", str(self.max_x), str(self.min_x), "y bounds:", str(self.max_y), str(self.min_y))
         intersection_points_left = []
         intersection_points_right = []
         for line_index in range(0, len(line_eqns)):
